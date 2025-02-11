@@ -1,0 +1,17 @@
+[Unit]
+Description=Servicio de la API de Censo Estudiantil
+Requires=censoestudiantil.socket
+After=network.target
+
+[Service]
+User=usuario
+Group=www-data
+WorkingDirectory=/var/www/html/censo_estudiantil
+ExecStart=/var/www/html/censo_estudiantil/.venv/bin/gunicorn \
+        --access-logfile - \
+        --workers 3 \
+        --bind unix:/run/censoestudiantil.sock \
+        configuracion.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
