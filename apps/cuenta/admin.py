@@ -29,7 +29,7 @@ class CustomUserAdmin(UserAdmin):
 
 
     add_form            =   UserCreateForm
-    prepopulate_fields  =   {'username': ('origen','cedula','email',)}
+    #prepopulate_fields  =   {'username': ('origen','cedula','email',)}
     add_fieldsets       =   (
                                 (
                                     None,   {

@@ -3,7 +3,7 @@ from ninja_jwt.tokens           import RefreshToken
 from ninja_schema               import ModelSchema, Schema, model_validator
 from ninja                      import Schema, Field
 from ninja_extra.exceptions     import APIException
-from pydantic                   import EmailStr
+#from pydantic                   import EmailStr
 
 
 from typing                     import Type, Dict,List
@@ -148,10 +148,8 @@ class ChangePasswordSchema(Schema):
 
 
 class ChangeEmailSchema(Schema):
-    email: EmailStr
-    class Config:
-        model   = User
-        include = ("email",)
+    email: str
+   
     
     @model_validator("email")
     def emty_email(cls, value_data):
