@@ -16,7 +16,6 @@ class UserController:
     def create_user(self, user_schema: CreateUserSchema):
         user    = user_schema.create()
         token   = SlidingToken.for_user(user)
-        #return UserTokenOutSchema(user = user, token = str(token), token_exp_date = datetime.utcfromtimestamp(token["exp"]))
         return UserTokenOutSchema(user = user, token = str(token))
         
 
@@ -28,7 +27,6 @@ class UserTokenController(TokenObtainSlidingController):
     def obtain_token(self, user_token: schema.TokenObtainSlidingSerializer):
         user    = user_token._user
         token   = SlidingToken.for_user(user)
-        #return UserTokenOutSchema(user = user, token = str(token), token_exp_date = datetime.utcfromtimestamp(token["exp"]))
         return UserTokenOutSchema(user = user, token = str(token))
 
     @route.post("/refresh", response = schema.TokenRefreshSlidingSerializer, url_name = "refresh")

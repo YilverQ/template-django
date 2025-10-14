@@ -6,8 +6,6 @@ from django.utils.html 			import format_html
 
 from .models                    import *
 
-from django.contrib.auth.models import Group
-#admin.site.unregister(Group)
 
 class UserCreateForm(UserCreationForm):
     class Meta:
@@ -53,4 +51,4 @@ class CustomUserAdmin(UserAdmin):
                                 ('Actividad',       {'fields': ('fecha_registro','fecha_actualizacion','last_login',)                                       }),
                             )
 
-admin.site.register(User,       CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)

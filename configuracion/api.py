@@ -4,7 +4,7 @@ from apps.cuenta.views.token                import MyTokenObtainPairController, 
 from ninja.errors                           import ValidationError as NinjaValidationError
 from datetime                               import datetime
 
-from apps.cuenta.views.token                    import router as token_router
+from apps.cuenta.views.token                import router as token_router
 
 api = NinjaExtraAPI(
                         title           = "Plantilla",
@@ -14,7 +14,7 @@ api = NinjaExtraAPI(
 
 
 
-api.add_router("/auth/",                token_router)
+api.add_router("/auth/", token_router)
 
 api.register_controllers(ResetPasswordController)
 api.register_controllers(MyTokenObtainPairController)

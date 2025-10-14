@@ -57,8 +57,6 @@ def change_password(request, payload: ChangePasswordSchema):
         return 400, {"message": "Operación Fallida"}
 
 
-#@router.put('/change-email/{int:id}/', tags=tag, response={200: SucessSchema, 404: SchemaError}, auth=ip_whitelist) # Restriccion por IP
-#@router.put('/change-email/{int:id}/', tags=tag, response={200: SucessSchema, 404: SchemaError}, auth=JWTAuth)  # Solicitud de Autorizacion
 @router.put('/change-email/{id}/', tags=tag, response={200: SucessSchema, 404: ErrorSchema})
 def change_email(request, id: int, payload: ChangeEmailSchema):
     try:
@@ -73,8 +71,6 @@ def change_email(request, id: int, payload: ChangeEmailSchema):
         return 404, {"message": "Operación Fallida"}
     
 
-#@router.put('/change-email/{int:id}/', tags=tag, response={200: SucessSchema, 404: SchemaError}, auth=ip_whitelist) # Restriccion por IP
-#@router.put('/change-email/{int:id}/', tags=tag, response={200: SucessSchema, 404: SchemaError}, auth=JWTAuth)  # Solicitud de Autorizacion
 @router.put('/change-question-answer/{id}/', tags=tag, response={200: SucessSchema, 404: ErrorSchema})
 def change_question_and_answer(request, id: int, payload: ChangeQASchema):
     try:

@@ -3,8 +3,7 @@ from ninja_jwt.tokens           import RefreshToken
 from ninja_schema               import ModelSchema, Schema, model_validator
 from ninja                      import Schema, Field
 from ninja_extra.exceptions     import APIException
-#from pydantic                   import EmailStr
-
+from pydantic                   import EmailStr
 
 from typing                     import Type, Dict,List
 from django.contrib.auth.models import Group
@@ -32,7 +31,6 @@ class UserSchema(ModelSchema):
                     )
 
 
-
 class MyTokenObtainPairOutSchema(Schema):
     refresh:        str
     access:         str
@@ -52,9 +50,6 @@ class MyTokenObtainPairSchema(TokenObtainPairInputSchema):
         values["access"]    = str(refresh.access_token)
         values.update(user  = UserSchema.from_orm(user))
         return values
-
-
-
 
 
 class CreateUserSchema(ModelSchema):
@@ -107,9 +102,6 @@ class CreateUserSchema(ModelSchema):
             raise APIException("Clave: la clave no puede estar vacia")
         return value_data
 
-
-
-
     @model_validator("username")
     def unique_username(cls, value_data):
         if User.objects.filter(username = value_data).exists():
@@ -139,7 +131,6 @@ class CreateUserSchema(ModelSchema):
     def create(self) -> Type[User]:
         return User.objects.create_user(**self.dict())
 
-
     
 class ChangePasswordSchema(Schema):
     user_id:        int
@@ -148,7 +139,7 @@ class ChangePasswordSchema(Schema):
 
 
 class ChangeEmailSchema(Schema):
-    email: str
+    email: EmailStr
    
     
     @model_validator("email")

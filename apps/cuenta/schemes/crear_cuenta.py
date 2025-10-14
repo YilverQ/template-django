@@ -1,5 +1,4 @@
-from datetime                   import datetime
-from typing                     import List, Optional, Type
+from typing                     import List, Type
 from django.contrib.auth.models import Group
 from ninja                      import Field
 from ninja_extra                import status
@@ -27,7 +26,6 @@ class CreateUserSchema(ModelSchema):
                         "cedula",
                         "nombre_apellido",
                         "email",
-                        
                         "password",
                     ]
 
@@ -38,7 +36,7 @@ class CreateUserSchema(ModelSchema):
         return value_data
 
     @model_validator("email")
-    def unique_name(cls, value_data):
+    def unique_email(cls, value_data):
         if User.objects.filter(email__icontains = value_data).exists():
             raise APIException("Este correo ya esta registrado", status_code = status.HTTP_400_BAD_REQUEST)
         return value_data
@@ -74,4 +72,3 @@ class UserRetrieveSchema(ModelSchema):
 class UserTokenOutSchema(Schema):
     token:          str
     user:           UserRetrieveSchema
-    #token_exp_date: Optional[datetime]
