@@ -27,6 +27,7 @@ BASE_APPS   =   [
 LOCAL_APPS  =   [
                     'apps.cuenta',
                     'apps.frontend',
+                    'apps.products',
                 ]
 
 THIRD_APPS =    [
