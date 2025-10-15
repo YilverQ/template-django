@@ -1,56 +1,36 @@
-from ninja_extra import api_controller, NinjaExtraAPI
-
-
-
-
-
-
-##########################
-from ninja_extra import api_controller, NinjaExtraAPI
-from ninja_extra.crud import NinjaExtraCRUD
-from ninja import Router
+from ninja_extra import api_controller, NinjaExtraAPI 
+from ninja_extra import http_get, http_post, http_put, http_delete
 from typing import List
+from django.shortcuts import get_object_or_404
 from apps.products.models import Product
-from apps.products.schemas import ProductSchema, CreateProductSchema
+from apps.products.schemas.ProductSchema import ProductSchema, CreateProductSchema
 
-api = NinjaExtraAPI()
 
-class ProductCRUD(NinjaExtraCRUD):
-    model = Product
-    schema = ProductSchema
-    create_schema = CreateProductSchema
-
-@api_controller("/products")
-class ProductController(ProductCRUD):
-
-    def list(self) -> List[Product]:
+@api_controller("/products", tags=["Products"])
+class ProductController:
+    
+    @http_get("", response=List[ProductSchema])
+    def list_products(self):
         return Product.objects.all()
-
-    def retrieve(self, id: int) -> Product:
-        return Product.objects.get(id=id)
-
-    def create(self, payload: CreateProductSchema) -> Product:
+    
+    @http_get("/{id}", response=ProductSchema)
+    def retrieve_product(self, id: int):
+        return get_object_or_404(Product, id=id)
+    
+    @http_post("", response=ProductSchema)
+    def create_product(self, payload: CreateProductSchema):
         return Product.objects.create(**payload.dict())
-
-    def update(self, id: int, payload: CreateProductSchema) -> Product:
-        product = Product.objects.get(id=id)
-        for key, value in payload.dict().items():
-            setattr(product, key, value)
+    
+    @http_put("/{id}", response=ProductSchema)
+    def update_product(self, id: int, payload: CreateProductSchema):
+        product = get_object_or_404(Product, id=id)
+        for attr, value in payload.dict().items():
+            setattr(product, attr, value)
         product.save()
         return product
-
-    def delete(self, id: int) -> dict:
-        product = Product.objects.get(id=id)
+    
+    @http_delete("/{id}")
+    def delete_product(self, id: int):
+        product = get_object_or_404(Product, id=id)
         product.delete()
         return {"message": "Deleted successfully"}
-
-    # Ruta personalizada para activar/desactivar producto
-    @api.post("/products/{id}/toggle-status")
-    def toggle_status(self, id: int) -> Product:
-        product = Product.objects.get(id=id)
-        product.status = not product.status
-        product.save()
-        return product
-
-# Registrar controlador
-api.add_controller(ProductController)

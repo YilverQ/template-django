@@ -20,3 +20,9 @@ __pycache__/
 # Ignore logs
 *.log
 logs/
+
+
+# Ignore VENV
+venv/
+venv
+.venv/

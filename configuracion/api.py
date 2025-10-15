@@ -1,6 +1,7 @@
 from ninja_extra                            import NinjaExtraAPI
 from django_rest_passwordreset.controller   import ResetPasswordController
 from apps.cuenta.views.token                import MyTokenObtainPairController, CreateUserController
+from apps.products.views.products           import ProductController 
 from ninja.errors                           import ValidationError as NinjaValidationError
 from datetime                               import datetime
 
@@ -19,6 +20,7 @@ api.add_router("/auth/", token_router)
 api.register_controllers(ResetPasswordController)
 api.register_controllers(MyTokenObtainPairController)
 api.register_controllers(CreateUserController)
+api.register_controllers(ProductController)
 
 
 # Manejador de excepciones global para ValidationError

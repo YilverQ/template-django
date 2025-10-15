@@ -1,14 +1,19 @@
-from ninja import ModelSchema, Schema
+from datetime import datetime
+from ninja import Schema
 from typing import Optional
 from apps.products.models import Product
 
-class ProductScheme(ModelSchema):
-    class Config:
-        model = Product
-        fields = ['id', 'name', 'stocks', 'price', 'created_at', 'updated_at', 'status', 'bar_code']
+class ProductSchema(Schema):
+    id: int
+    name: str
+    stocks: int
+    price: float
+    created_at: datetime
+    updated_at: datetime
+    status: bool
+    bar_code: Optional[str] = None
 
-
-class CreateProductScheme(Schema):
+class CreateProductSchema(Schema):
     name: str
     stocks: int
     price: float

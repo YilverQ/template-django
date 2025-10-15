@@ -33,10 +33,9 @@ LOCAL_APPS  =   [
 THIRD_APPS =    [
                     'corsheaders',
                     'ninja_extra',
-                    #'ninja_jwt',
                     'django_rest_passwordreset',
-                    #'import_export',
-                    #'maintenance_mode',
+                    'rest_framework',
+                    'drf_yasg',
                 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
